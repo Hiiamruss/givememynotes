@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<style>
+    .card {
+        width:1000px;
+        background-color:lightblue;
+        border-radius:15px;
+        padding:20px;
+    }
+
+    textarea {
+        width: 500px;
+        height: 200px;
+        border-radius:15px;
+    }
+
+    .output {
+        width: 500px;
+        border-radius:15px;
+        background-color:white;
+    }
+
+    button {
+        width:100px;
+        height:50px;
+        border-radius:15px;
+    }
+</style>
+<html>
+    <head>
+        <title>Give Me My Notes</title>
+    </head>
+    <body>
+        <center>
+            <section class="card">
+                <h1>Give Me My Notes 📝</h1>
+                <p>The best AI note maker, find the type of notes you need to make.</p>
+                <textarea id="references">Jumble everything you want to make notes of here.</textarea>
+                <section style="margin-bottom:20px;">
+                    <button onclick="AskAI()">Generate Notes</button>
+                </section>
+                <section class="output">
+                    <h1>Your notes will show up here!</h1>
+                    <p id="output"></p>
+                </section>
+            </section>
+            <h1>About Give Me My Notes 📝</h1>
+            <p>Give Me My Notes is a compact, bite sized notes maker. </p>
+            <h1>View Other Tools 🛠️</h1>
+            <a href="index.html"><button>Notes Maker</button></a>
+            <a href="chapelnotesmaker.html"><button>Chapel Note Maker</button></a>
+        </center>
+    </body>
+</html>
+<script>
+    function AskAI() {
+        fetch("https://available-via-baby-percent.trycloudflare.com/api/notes", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify({
+                    message: document.getElementById("references").value
+                })
+            }).then(response => response.json())
+            .then(data => {
+                if (data.reply == "error: not enough context") {
+                    alert("Please give more context for the prompt you need to ask. ")
+                    return;
+                }
+                document.getElementById("output").innerText = data.reply;
+            });
+    }
+</script>
