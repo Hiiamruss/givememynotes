@@ -24,6 +24,12 @@
         height:50px;
         border-radius:15px;
     }
+
+    input {
+        width:200px;
+        height:25px;
+        border-radius:15px;
+    }
 </style>
 <html>
     <head>
@@ -33,35 +39,48 @@
         <center>
             <section class="card">
                 <h1>Give Me My Notes 📝</h1>
-                <p>Chapel Notes Maker</p>
-                <textarea id="references">This is a place where you can put all the sermon reflection questions.</textarea>
+                <p>Free essay maker</p>
+                <textarea id="references">Jumble here all your topics, and what essay you want to generate.</textarea>
+                <section>
+                    <input type="number" placeholder="Enter minimum word count" id="min">
+                    <input type="number" placeholder="Enter maximum word count" id="max">
+                </section>
                 <section style="margin-bottom:20px;">
-                    <button onclick="AskAI()">Generate Notes</button>
+                    <button onclick="AskAI()">Generate Essay</button>
                 </section>
                 <section class="output">
-                    <h1>Your reflection will show up here!</h1>
+                    <h1>Your essay will show up here!</h1>
                     <p id="output"></p>
                 </section>
             </section>
-            <h1>About Chapel Notes Maker</h1>
-            <p>Chapel Notes maker uses the latest official rubric from IICS.</p>
+            <h1>About Essay Maker</h1>
+            <p>The essay maker can create free essays for you.</p>
             <h1>View Other Tools 🛠️</h1>
             <a href="index.html"><button>Notes Maker</button></a>
             <a href="chapelnotesmaker.html"><button>Chapel Note Maker</button></a>
             <a href="essaymaker.html"><button>Essay Maker</button></a>
-            
+            <a href="https://humanizeai.pro"><button>Free AI Humanizer</button></a>
         </center>
     </body>
 </html>
 <script>
     function AskAI() {
-        fetch("https://available-via-baby-percent.trycloudflare.com/api/chapelnotes", {
+        const references = document.getElementById("references").value;
+        const min = document.getElementById("min").value;
+        const max = document.getElementById("max").value;
+
+        if (!references || !min || !max) {
+            alert("Please fill in all the fields before making an essay. ");
+            return;
+        }
+
+        fetch("https://available-via-baby-percent.trycloudflare.com/api/essay", {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
                 },
                 body: JSON.stringify({
-                    message: document.getElementById("references").value
+                    message: "make an essay based on this topic: " + document.getElementById("references").value + " and this is how many words it should be: min" + document.getElementById("min").value + "words max" + document.getElementById("max") + "words. "
                 })
             }).then(response => response.json())
             .then(data => {
