@@ -73,11 +73,6 @@
         const min = document.getElementById("min").value;
         const max = document.getElementById("max").value;
 
-        if (!references || !min || !max) {
-            alert("Please fill in all the fields before making an essay. ");
-            return;
-        }
-
         fetch("https://available-via-baby-percent.trycloudflare.com/api/essay", {
                 method: "POST",
                 headers: {
