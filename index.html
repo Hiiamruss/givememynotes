@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script> 
 <style>
     .card {
         width:1000px;
@@ -59,8 +61,27 @@
     </body>
 </html>
 <script>
+        const firebaseConfig = {
+        apiKey: "AIzaSyCa5IXdhKAWd9xb_pdWpdTGWnwyTHz1aNM",
+        authDomain: "apikeys-9c946.firebaseapp.com",
+        databaseURL: "https://apikeys-9c946-default-rtdb.firebaseio.com",
+        projectId: "apikeys-9c946",
+        storageBucket: "apikeys-9c946.firebasestorage.app",
+        messagingSenderId: "226994260057",
+        appId: "1:226994260057:web:35c3ed5b52cca047b2c948"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const link = db.ref("link");
+    let data;
+
+    link.on("value", snap => {
+        data = snap.val();
+    });
+
     function AskAI() {
-        fetch("https://available-via-baby-percent.trycloudflare.com/api/notes", {
+        fetch(data + "api/notes", {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
